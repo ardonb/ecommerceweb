@@ -69,7 +69,7 @@ public class UserController {
 		model.addAttribute("reverseSortDir", reverseSortDir);
 		model.addAttribute("keyword", keyword);
 
-		return "users/users";		
+		return "users/users";			
 	}
 	
 	@GetMapping("/users/new")
