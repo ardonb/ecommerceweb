@@ -4,21 +4,20 @@ dropdownCategories = $("#category");
 
 $(document).ready(function() {
 
-	$("#shortDescription").richText();
-	$("#fullDescription").richText();
-
-	dropdownBrands.change(function() {
-		dropdownCategories.empty();
-		getCategories();
-	});	
-
-	getCategories();
 
 	$("input[name='extraImage']").each(function(index) {
 		extraImagesCount++;
 
 		$(this).change(function() {
+			if (!checkFileSize(this)) {
+				return;
+			}
 			showExtraImageThumbnail(this, index);
+		});
+	});
+	$("a[name='linkRemoveExtraImage']").each(function(index) {
+		$(this).click(function() {
+			removeExtraImage(index);
 		});
 	});
 
@@ -26,6 +25,14 @@ $(document).ready(function() {
 
 function showExtraImageThumbnail(fileInput, index) {
 	var file = fileInput.files[0];
+	
+	fileName = file.name;
+
+	imageNameHiddenField = $("#imageName" + index);
+	if (imageNameHiddenField.length) {
+		imageNameHiddenField.val(fileName);
+	}
+	
 	var reader = new FileReader();
 	reader.onload = function(e) {
 		$("#extraThumbnail" + index).attr("src", e.target.result);
@@ -70,40 +77,3 @@ function addNextExtraImageSection(index) {
 function removeExtraImage(index) {
 	$("#divExtraImage" + index).remove();
 }
-
-function getCategories() {
-	brandId = dropdownBrands.val(); 
-	url = brandModuleURL + "/" + brandId + "/categories";
-
-	$.get(url, function(responseJson) {
-		$.each(responseJson, function(index, category) {
-			$("<option>").val(category.id).text(category.name).appendTo(dropdownCategories);
-		});			
-	});
-}
-
-function checkUnique(form) {
-	productId = $("#id").val();
-	productName = $("#name").val();
-
-	csrfValue = $("input[name='_csrf']").val();
-
-	url = "[[@{/products/check_unique}]]";
-
-	params = {id: productId, name: productName, _csrf: csrfValue};
-
-	$.post(checkUniqueUrl, params, function(response) {
-		if (response == "OK") {
-			form.submit();
-		} else if (response == "Duplicate") {
-			showWarningModal("There is another product having the name " + productName);	
-		} else {
-			showErrorModal("Unknown response from server");
-		}
-
-	}).fail(function() {
-		showErrorModal("Could not connect to the server");
-	});
-
-	return false;
-}	 

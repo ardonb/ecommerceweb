@@ -1,8 +1,11 @@
 package com.ecommerce.common.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.Iterator;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -70,8 +73,11 @@ public class Product {
 	@JoinColumn(name = "brand_id")	
 	private Brand brand;
 	
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<ProductImage> images = new HashSet<>();
+	
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ProductDetail> details = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
@@ -247,5 +253,33 @@ public class Product {
 		return "/product-images/" + this.id + "/" + this.mainImage;
 	
 
+	}
+	public List<ProductDetail> getDetails() {
+		return details;
+	}
+
+	public void setDetails(List<ProductDetail> details) {
+		this.details = details;
+	}
+
+	public void addDetail(String name, String value) {
+		this.details.add(new ProductDetail(name, value, this));
+	}
+	
+	public void addDetail(Integer id, String name, String value) {
+		this.details.add(new ProductDetail(id, name, value, this));
+	}
+
+	public boolean containsImageName(String imageName) {
+		Iterator<ProductImage> iterator = images.iterator();
+
+		while (iterator.hasNext()) {
+			ProductImage image = iterator.next();
+			if (image.getName().equals(imageName)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
