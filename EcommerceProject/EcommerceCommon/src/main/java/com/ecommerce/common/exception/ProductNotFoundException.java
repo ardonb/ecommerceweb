@@ -1,4 +1,4 @@
-package com.ecommerce.admin.product;
+package com.ecommerce.common.exception;
 
 public class ProductNotFoundException extends Exception {
 	

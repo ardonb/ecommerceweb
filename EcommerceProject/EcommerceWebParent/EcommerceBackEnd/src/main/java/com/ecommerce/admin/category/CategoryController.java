@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ecommerce.admin.FileUploadUtil;
 import com.ecommerce.common.entity.Category;
+import com.ecommerce.common.exception.CategoryNotFoundException;
 
 @Controller
 public class CategoryController {

@@ -1,4 +1,4 @@
-package com.ecommerce.admin.category;
+package com.ecommerce.common.exception;
 
 public class CategoryNotFoundException extends Exception {
 

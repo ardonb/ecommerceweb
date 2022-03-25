@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import com.ecommerce.common.entity.Category;
+import com.ecommerce.common.exception.CategoryNotFoundException;
 
 @Service
 @Transactional

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ecommerce.common.entity.Product;
+import com.ecommerce.common.exception.ProductNotFoundException;
 
 @Service
 @Transactional
