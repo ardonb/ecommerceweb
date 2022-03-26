@@ -1,4 +1,4 @@
-package com.ecommerce.admin.setting.state;
+package com.ecommerce.common.entity;
 
 public class StateDTO {
 	private Integer id;
