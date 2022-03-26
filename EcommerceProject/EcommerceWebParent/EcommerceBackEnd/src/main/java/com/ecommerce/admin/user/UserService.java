@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ecommerce.admin.paging.PagingAndSortingHelper;
 import com.ecommerce.common.entity.Role;
 import com.ecommerce.common.entity.User;
 
@@ -41,20 +42,12 @@ public class UserService {
 		return (List<User>) userRepo.findAll(Sort.by("firstName").ascending());
 	}
 
-	public List<Role> listRoles() {
-		return (List<Role>) roleRepo.findAll();
+	public void listByPage(int pageNum, PagingAndSortingHelper helper) {
+		helper.listEntities(pageNum, USERS_PER_PAGE, userRepo);
 	}
 	
-	public Page<User> listByPage(int pageNum, String sortField, String sortDir, String keyword) {
-		Sort sort = Sort.by(sortField);
-
-		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
-
-		Pageable pageable = PageRequest.of(pageNum - 1, USERS_PER_PAGE, sort);
-		if (keyword != null) {
-			return userRepo.findAll(keyword, pageable);
-		}
-		return userRepo.findAll(pageable);
+	public List<Role> listRoles() {
+		return (List<Role>) roleRepo.findAll();
 	}
 
 	public User save(User user) {
