@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ecommerce.category.CategoryService;
 import com.ecommerce.common.entity.Category;
-import com.ecommerce.common.entity.Product;
+import com.ecommerce.common.entity.product.Product;
 import com.ecommerce.common.exception.CategoryNotFoundException;
 import com.ecommerce.common.exception.ProductNotFoundException;
 

@@ -22,7 +22,7 @@ import com.ecommerce.admin.paging.PagingAndSortingParam;
 import com.ecommerce.admin.security.EcommerceUserDetails;
 import com.ecommerce.common.entity.Brand;
 import com.ecommerce.common.entity.Category;
-import com.ecommerce.common.entity.Product;
+import com.ecommerce.common.entity.product.Product;
 import com.ecommerce.common.exception.ProductNotFoundException;
 
 @Controller

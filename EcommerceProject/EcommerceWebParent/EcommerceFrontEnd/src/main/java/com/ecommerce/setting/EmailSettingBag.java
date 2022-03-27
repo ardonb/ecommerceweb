@@ -2,8 +2,8 @@ package com.ecommerce.setting;
 
 import java.util.List;
 
-import com.ecommerce.common.entity.Setting;
-import com.ecommerce.common.entity.SettingBag;
+import com.ecommerce.common.entity.setting.Setting;
+import com.ecommerce.common.entity.setting.SettingBag;
 
 public class EmailSettingBag extends SettingBag {
 

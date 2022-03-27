@@ -1,20 +1,16 @@
-package com.ecommerce.common.entity;
+package com.ecommerce.common.entity.product;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.ecommerce.common.entity.IdBasedEntity;
+
 @Entity
 @Table(name = "product_details")
-public class ProductDetail {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+public class ProductDetail extends IdBasedEntity{
 
 	@Column(nullable = false, length = 255)
 	private String name;
@@ -42,14 +38,6 @@ public class ProductDetail {
 		this.name = name;
 		this.value = value;
 		this.product = product;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getName() {

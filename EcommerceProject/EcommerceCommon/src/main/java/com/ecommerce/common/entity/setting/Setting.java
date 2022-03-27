@@ -1,4 +1,4 @@
-package com.ecommerce.common.entity;
+package com.ecommerce.common.entity.setting;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.ecommerce.common.entity;
+package com.ecommerce.common.entity.product;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,22 +10,20 @@ import java.util.Iterator;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.ecommerce.common.entity.Brand;
+import com.ecommerce.common.entity.Category;
+import com.ecommerce.common.entity.IdBasedEntity;
+
 
 @Entity
 @Table(name = "products")
-public class Product {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+public class Product extends IdBasedEntity{
 
 	@Column(unique = true, length = 256, nullable = false)
 	private String name;
@@ -84,14 +82,6 @@ public class Product {
 	}
 
 	public Product() {
-	}
-	
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getName() {

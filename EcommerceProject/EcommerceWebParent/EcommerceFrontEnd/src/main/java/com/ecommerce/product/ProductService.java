@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.ecommerce.common.entity.Product;
+import com.ecommerce.common.entity.product.Product;
 import com.ecommerce.common.exception.ProductNotFoundException;
 
 @Service
