@@ -3,11 +3,7 @@ package com.ecommerce.admin.product;
 import java.io.IOException;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +29,7 @@ import com.ecommerce.common.exception.ProductNotFoundException;
 public class ProductController {
 	
 	private String defaultRedirectURL = "redirect:/products/page/1?sortField=name&sortDir=asc&categoryId=0";
-	private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
+	//private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 	
 	@Autowired private ProductService productService;
 	@Autowired private BrandService brandService;
@@ -48,7 +44,7 @@ public class ProductController {
 	public String listByPage(
 			@PagingAndSortingParam(listName = "listProducts", moduleURL = "/products") PagingAndSortingHelper helper,
 			@PathVariable(name = "pageNum") int pageNum, Model model,
-			@Param("categoryId") Integer categoryId
+			Integer categoryId
 			) {
 		productService.listByPage(pageNum, helper, categoryId);
 

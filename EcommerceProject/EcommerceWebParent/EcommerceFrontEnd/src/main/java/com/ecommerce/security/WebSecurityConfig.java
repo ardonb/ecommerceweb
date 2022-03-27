@@ -3,6 +3,7 @@ package com.ecommerce.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -34,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		//http.authorizeRequests().anyRequest().permitAll();
 		http.authorizeRequests()
-		.antMatchers("/account_details", "/update_account_details").authenticated()
+		.antMatchers("/account_details", "/update_account_details", "/cart").authenticated()
 		.anyRequest().permitAll()
 		.and()
 		.formLogin()
@@ -53,7 +54,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.rememberMe()
 			.key("1234567890_aBcDeFgHiJkLmNoPqRsTuVwXyZ")
-			.tokenValiditySeconds(14 * 24 * 60 * 60);
+			.tokenValiditySeconds(14 * 24 * 60 * 60)
+			.and()
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 
 	}
 
