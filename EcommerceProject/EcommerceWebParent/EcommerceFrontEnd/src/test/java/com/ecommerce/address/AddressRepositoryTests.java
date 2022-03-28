@@ -24,7 +24,7 @@ public class AddressRepositoryTests {
 
 	@Test
 	public void testAddNew() {
-		Integer customerId = 5;
+		Integer customerId = 39;
 		Integer countryId = 234; // USA
 
 		Address newAddress = new Address();
@@ -88,7 +88,7 @@ public class AddressRepositoryTests {
 	}
 	@Test
 	public void testSetDefault() {
-		Integer addressId = 8;
+		Integer addressId = 12;
 		repo.setDefaultAddress(addressId);
 
 		Address address = repo.findById(addressId).get();
