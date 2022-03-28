@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ecommerce.admin.paging.PagingAndSortingHelper;
 import com.ecommerce.admin.paging.PagingAndSortingParam;
 import com.ecommerce.admin.setting.SettingService;
+import com.ecommerce.common.entity.Country;
 import com.ecommerce.common.entity.order.Order;
 import com.ecommerce.common.entity.setting.Setting;
 
@@ -75,4 +76,25 @@ public class OrderController {
 		return defaultRedirectURL;
 	}
 	
+	@GetMapping("/orders/edit/{id}")
+	public String editOrder(@PathVariable("id") Integer id, Model model, RedirectAttributes ra,
+			HttpServletRequest request) {
+		try {
+			Order order = orderService.get(id);;
+
+			List<Country> listCountries = orderService.listAllCountries();
+
+			model.addAttribute("pageTitle", "Edit Order (ID: " + id + ")");
+			model.addAttribute("order", order);
+			model.addAttribute("listCountries", listCountries);
+
+			return "orders/order_form";
+
+		} catch (OrderNotFoundException ex) {
+			ra.addFlashAttribute("message", ex.getMessage());
+			return defaultRedirectURL;
+		}
+
+	}	
+
 }
