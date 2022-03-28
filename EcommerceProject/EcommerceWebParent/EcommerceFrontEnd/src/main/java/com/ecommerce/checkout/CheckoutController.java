@@ -1,4 +1,4 @@
-package com.ecommerce.shoppingcart;
+package com.ecommerce.checkout;
 
 import java.util.List;
 
@@ -17,43 +17,43 @@ import com.ecommerce.common.entity.Customer;
 import com.ecommerce.common.entity.ShippingRate;
 import com.ecommerce.customer.CustomerService;
 import com.ecommerce.shipping.ShippingRateService;
+import com.ecommerce.shoppingcart.ShoppingCartService;
 
 @Controller
-public class ShoppingCartController {
+public class CheckoutController {
+
+	@Autowired private CheckoutService checkoutService;
 	@Autowired private CustomerService customerService;
-	@Autowired private ShoppingCartService cartService;
 	@Autowired private AddressService addressService;
 	@Autowired private ShippingRateService shipService;
+	@Autowired private ShoppingCartService cartService;
 
-	@GetMapping("/cart")
-	public String viewCart(Model model, HttpServletRequest request) {
+	@GetMapping("/checkout")
+	public String showCheckoutPage(Model model, HttpServletRequest request) {
 		Customer customer = getAuthenticatedCustomer(request);
-		List<CartItem> cartItems = cartService.listCartItems(customer);
 
-		float estimatedTotal = 0.0F;
-
-		for (CartItem item : cartItems) {
-			estimatedTotal += item.getSubtotal();
-		}
-		
 		Address defaultAddress = addressService.getDefaultAddress(customer);
 		ShippingRate shippingRate = null;
-		boolean usePrimaryAddressAsDefault = false;
 
 		if (defaultAddress != null) {
+			model.addAttribute("shippingAddress", defaultAddress.toString());
 			shippingRate = shipService.getShippingRateForAddress(defaultAddress);
 		} else {
-			usePrimaryAddressAsDefault = true;
+			model.addAttribute("shippingAddress", customer.toString());
 			shippingRate = shipService.getShippingRateForCustomer(customer);
 		}
 
-		model.addAttribute("usePrimaryAddressAsDefault", usePrimaryAddressAsDefault);
-		model.addAttribute("shippingSupported", shippingRate != null);
+		if (shippingRate == null) {
+			return "redirect:/cart";
+		}
 
+		List<CartItem> cartItems = cartService.listCartItems(customer);
+		CheckoutInfo checkoutInfo = checkoutService.prepareCheckout(cartItems, shippingRate);
+
+		model.addAttribute("checkoutInfo", checkoutInfo);
 		model.addAttribute("cartItems", cartItems);
-		model.addAttribute("estimatedTotal", estimatedTotal);
 
-		return "cart/shopping_cart";
+		return "checkout/checkout";
 	}
 
 	private Customer getAuthenticatedCustomer(HttpServletRequest request) {
