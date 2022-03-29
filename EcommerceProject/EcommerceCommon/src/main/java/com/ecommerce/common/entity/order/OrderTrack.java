@@ -1,6 +1,9 @@
 package com.ecommerce.common.entity.order;
 
 import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +12,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.ecommerce.common.entity.IdBasedEntity;
 
@@ -59,6 +63,22 @@ public class OrderTrack extends IdBasedEntity {
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+	
+	@Transient
+	public String getUpdatedTimeOnForm() {
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+		return dateFormatter.format(this.updatedTime);
+	}
+
+	public void setUpdatedTimeOnForm(String dateString) {
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+
+		try {
+			this.updatedTime = dateFormatter.parse(dateString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 
 

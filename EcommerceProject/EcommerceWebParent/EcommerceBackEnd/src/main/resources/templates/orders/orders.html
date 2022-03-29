@@ -19,6 +19,7 @@
 					<th th:replace="fragments :: column_link('total', 'Total', 'none')" />
 					<th th:replace="fragments :: column_link('orderTime', 'Order Time', 'none')" />
 					
+
 					<th class="hideable-column">
 					<th th:replace="fragments :: column_link('destination', 'Destination', 'tag')" />
 					</th>
@@ -51,7 +52,7 @@
 					<td class="hideable-column">[[${order.destination}]]</td>
 					<td class="hideable-column">[[${order.paymentMethod}]]</td>
 					<td class="hideable-column">[[${order.status}]]</td>
-					
+
 					<td>
 						<a class="fas fa-file-alt fa-2x icon-green linkOrderDetail"
 							th:href="@{'/orders/detail/' + ${order.id}}"
@@ -66,7 +67,7 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<div class="less-details">
 		<th:block th:each="order : ${listOrders}">
 		<div class="row m-1">
@@ -95,33 +96,31 @@
 
 	<div th:replace="fragments :: pagination('orders')"></div>
 
-	<div th:replace="modal_fragments :: confirm_modal"></div>
-
+	<div th:replace="modal_fragments :: confirm_modal" />
+	
 	<div class="modal fade" id="customerDetailModal">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 			</div>
 		</div>
-	</div>	
-	
+	</div>
 	<div class="modal fade" id="orderDetailModal">
 		<div class="modal-dialog modal-xl">
 			<div class="modal-content">
 			</div>
 		</div>
 	</div>
-
+		
 	<div th:replace="fragments :: footer"></div>
-
+	
 </div>
 <script th:src="@{/js/common_list.js}"></script>
 <script type="text/javascript">
 	moduleURL = "[[@{/orders}]]";
-
 	$(document).ready(function() {
 		handleLinkViewCustomerDetails();
 		handleLinkViewOrderDetails();
-		handleLinkDeleteOrder();  
+		handleLinkDeleteOrder();		
 	});
 	
 	function handleLinkDeleteOrder() {
@@ -130,7 +129,7 @@
 			showDeleteConfirmModal($(this), 'order');
 		});		
 	}
-
+	
 	function handleLinkViewCustomerDetails() {
 		$(".linkCustomerDetail").on("click", function(e) {
 			e.preventDefault();
@@ -138,6 +137,7 @@
 			$("#customerDetailModal").modal("show").find(".modal-content").load(linkDetailURL);
 		});			
 	}
+	
 	function handleLinkViewOrderDetails() {
 		$(".linkOrderDetail").on("click", function(e) {
 			e.preventDefault();
@@ -147,4 +147,4 @@
 	}
 </script>
 </body>
-</html> 
+</html>
